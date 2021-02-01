@@ -50,40 +50,41 @@ public class Account {
 	}
 
 	// Methods
-	public double inputMoneyToCard(double inputMoney) {
+	public void inputMoneyToCard(double inputMoney, int accountNumber) {
 		if (inputMoney < 0) {
 			System.out.println("Input money is invalid");
-			return getAccountMoney();
+			return;
 		}
 
 		NumberFormat currencyEN = NumberFormat.getCurrencyInstance();
-		System.out.println("Account money is added " + currencyEN.format(inputMoney));
+		System.out.println(
+				"Account money has account number " + accountNumber + " is added " + currencyEN.format(inputMoney));
 
-		return getAccountMoney() + inputMoney;
+		this.accountMoney = getAccountMoney() + inputMoney;
 	}
 
-	public double withdrawMoneyFromCard(double outputMoney) {
+	public void withdrawMoneyFromCard(double outputMoney, int accountNummber) {
 		double accountMoney = getAccountMoney();
 
 		if (accountMoney == 0) {
 			System.out.println("Account money is zero");
-			return getAccountMoney();
+			return;
 		}
 
 		if (accountMoney < outputMoney) {
 			System.out.println("Account money is smaller than output money");
-			return getAccountMoney();
+			return;
 		}
 
 		if (outputMoney < 0) {
 			System.out.println("Output money is invalid");
-			return getAccountMoney();
+			return;
 		}
 
 		NumberFormat currencyEN = NumberFormat.getCurrencyInstance();
-		System.out.println("Account money is subtracted " + currencyEN.format(outputMoney));
+		System.out.println("Account money " + accountNumber + " is subtracted " + currencyEN.format(outputMoney));
 
-		return getAccountMoney() - outputMoney;
+		this.accountMoney = getAccountMoney() - outputMoney;
 	}
 
 	public double expiratedDateMoney() {
@@ -103,21 +104,19 @@ public class Account {
 
 	public void inputInfoAccount(Scanner scanner) {
 		System.out.println("Please enter account number:");
-        setAccountNumber(Integer.parseInt(scanner.nextLine()));
-      
-        System.out.println("Please enter account name:");
-        setAccountNumber(Integer.parseInt(scanner.nextLine()));
-        
-        
-        setAccountMoney(50);
+		setAccountNumber(Integer.parseInt(scanner.nextLine()));
+
+		System.out.println("Please enter account name:");
+		setAccountName(scanner.nextLine());
+
+		setAccountMoney(50);
 	}
 
 	public void outInfoAccount() {
 		NumberFormat currencyEN = NumberFormat.getCurrencyInstance();
-        String accountMoney = currencyEN.format(getAccountMoney());
-        
-        System.out.println("Account Number: " + getAccountNumber() + " - " + 
-        "Account Name: " + getAccountName() + " - " + "Account Money: " + accountMoney
-        		);
+		String accountMoney = currencyEN.format(getAccountMoney());
+
+		System.out.println("Account Number: " + getAccountNumber() + " - " + "Account Name: " + getAccountName() + " - "
+				+ "Account Money: " + accountMoney);
 	}
 }
