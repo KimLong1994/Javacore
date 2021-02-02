@@ -50,21 +50,23 @@ public class Main {
 
 				System.out.println("Please enter your account number");
 				int accountNumber = Integer.parseInt(scanner.nextLine());
-				System.out.println("How much money do you want to add ?");
-				double money = Double.parseDouble(scanner.nextLine());
 
 				for (int index = 0; index < accounts.length; index++) {
-				System.out.println(index);
 					if (accounts[index].getAccountNumber() == accountNumber) {
 						checkIndex = index;
-						accounts[index].inputMoneyToCard(money, accountNumber);
 						break;
 					}
 				}
 
 				if (checkIndex < 0) {
 					System.out.println("Please try again");
+					break;
 				}
+
+				System.out.println("How much money do you want to add ?");
+				double money = Double.parseDouble(scanner.nextLine());
+				accounts[checkIndex].inputMoneyToCard(money, accountNumber);
+
 				break;
 			}
 
@@ -78,29 +80,107 @@ public class Main {
 
 				System.out.println("Please enter your account number");
 				int accountNumber = Integer.parseInt(scanner.nextLine());
-				System.out.println("How much money do you want to withdrawn ?");
-				double money = Double.parseDouble(scanner.nextLine());
 
 				for (int index = 0; index < accounts.length; index++) {
 					if (accounts[index].getAccountNumber() == accountNumber) {
 						checkIndex = index;
-						accounts[index].withdrawMoneyFromCard(money, accountNumber);
 						break;
 					}
 				}
 
 				if (checkIndex < 0) {
 					System.out.println("Please try again");
+					break;
 				}
+
+				System.out.println("How much money do you want to withdrawn ?");
+				double money = Double.parseDouble(scanner.nextLine());
+				accounts[checkIndex].withdrawMoneyFromCard(money, accountNumber);
+
 				break;
 			}
 
 			case 5: {
-				
+				if (accounts == null) {
+					System.out.println("Accounts are empty");
+					break;
+				}
+
+				int checkIndex = -1;
+
+				System.out.println("Please enter your account number");
+				int accountNumber = Integer.parseInt(scanner.nextLine());
+
+				for (int index = 0; index < accounts.length; index++) {
+					if (accounts[index].getAccountNumber() == accountNumber) {
+						checkIndex = index;
+						break;
+					}
+				}
+
+				if (checkIndex < 0) {
+					System.out.println("Please try again");
+					break;
+				}
+
+				accounts[checkIndex].expiratedDateMoney();
+
 				break;
 			}
 
 			case 6: {
+				if (accounts == null) {
+					System.out.println("Accounts are empty");
+					break;
+				}
+
+				// Person Transfers Money
+				int indexOfPersonTransferMoney = -1;
+
+				System.out.println("Please enter your account number");
+				int accountTransferNumber = Integer.parseInt(scanner.nextLine());
+
+				for (int index = 0; index < accounts.length; index++) {
+					if (accounts[index].getAccountNumber() == accountTransferNumber) {
+						indexOfPersonTransferMoney = index;
+						break;
+					}
+				}
+
+				if (indexOfPersonTransferMoney < 0) {
+					System.out.println("Person transfer is invalid");
+					break;
+				}
+
+				// Person Received Money
+				int indexOfPersonReceivedMoney = -1;
+
+				System.out.println("Please enter your account received number");
+				int accountReceivedNumber = Integer.parseInt(scanner.nextLine());
+
+				if (accountTransferNumber == accountReceivedNumber) {
+					System.out.println("Person transfer and person received are invalid");
+					break;
+				}
+
+				for (int index = 0; index < accounts.length; index++) {
+					if (accounts[index].getAccountNumber() == accountReceivedNumber) {
+						indexOfPersonReceivedMoney = index;
+						break;
+					}
+				}
+
+				if (indexOfPersonReceivedMoney < 0) {
+					System.out.println("Person received is invalid");
+					break;
+				}
+
+				// Process Transfer Money And Received Money
+				System.out.println("How much money do you want to transfer ?");
+				double transferMoney = Double.parseDouble(scanner.nextLine());
+				accounts[indexOfPersonReceivedMoney].inputMoneyToCard(transferMoney, accountReceivedNumber);
+				accounts[indexOfPersonTransferMoney].withdrawMoneyFromCard(transferMoney, accountTransferNumber);
+
 				break;
 			}
 
@@ -119,7 +199,7 @@ public class Main {
 		System.out.println("2. Show all info of client");
 		System.out.println("3. Input money to card");
 		System.out.println("4. With drawn money from card");
-		System.out.println("5. Expira date of client");
+		System.out.println("5. Expire date money of client");
 		System.out.println("6. Transfer money to another card");
 		System.out.println("7. Tap others number to stop program");
 	}

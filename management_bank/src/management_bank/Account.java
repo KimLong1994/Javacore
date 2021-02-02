@@ -87,7 +87,7 @@ public class Account {
 		this.accountMoney = getAccountMoney() - outputMoney;
 	}
 
-	public double expiratedDateMoney() {
+	public void expiratedDateMoney() {
 		double accountMoney = getAccountMoney();
 		double interestRate = getInterestRate();
 
@@ -95,10 +95,8 @@ public class Account {
 			accountMoney = accountMoney + (accountMoney * interestRate);
 			NumberFormat currencyEN = NumberFormat.getCurrencyInstance();
 			System.out.println("Account money is recieved " + currencyEN.format(accountMoney));
-			return accountMoney;
 		} else {
 			System.out.println("Account money is invalid");
-			return accountMoney;
 		}
 	}
 
