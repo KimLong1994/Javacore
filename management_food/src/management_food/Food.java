@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Food {
 	// Attributes
 	private String foodCode, foodName;
-	private double unitPrice;
+	private double unitPrice = 0;
 	private Date manufacturingDate, expiryDate;
 
 	// Getters, Setters
@@ -93,29 +93,28 @@ public class Food {
 	public void inputInfoOfFood(Scanner scanner) {
 		System.out.println("Please enter your food code");
 		this.foodCode = scanner.nextLine();
-		checkInputInfoOfFood(foodCode, "Food Code");
 
 		System.out.println("Please enter your food name");
 		this.foodName = scanner.nextLine();
-		checkInputInfoOfFood(foodName, "Food Name");
 
 		System.out.println("Please enter your price");
 		this.unitPrice = Double.parseDouble(scanner.nextLine());
-		checkUnitPriceOfFood(unitPrice);
 	}
 
-	public void checkInputInfoOfFood(String inputInfo, String title) {
-		if (inputInfo.isEmpty()) {
+	public boolean checkInputInfoOfFood(String inputInfo, String title) {
+		if (inputInfo.length() == 0) {
 			System.out.println("Please enter again " + title);
-			return;
+			return false;
 		}
+		return true;
 	}
 
-	public void checkUnitPriceOfFood(double unitPrice) {
+	public boolean checkUnitPriceOfFood(double unitPrice) {
 		if (unitPrice < 0) {
 			System.out.println("Please enter again unit price");
-			return;
+			return false;
 		}
+		return true;
 	}
 
 	// Input date of food
@@ -128,14 +127,15 @@ public class Food {
 		inputExpiryDate(Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine()),
 				Integer.parseInt(scanner.nextLine()));
 
-		checkInputDate();
+		
 	}
 
-	public void checkInputDate() {
+	public  boolean checkInputDate() {
 		if (getExpiryDate().compareTo(getManufacturingDate()) < 0) {
 			System.out.println("Manufacturing date is not bigger than expiry date");
-			return;
+			return false;
 		}
+		return true;
 	}
 
 	public void checkFoodStillCouldUseOrCouldNotUse() {
@@ -146,9 +146,9 @@ public class Food {
 		String todayFormat = simpleDateFormat.format(today);
 
 		if (getExpiryDate().compareTo(today) < 0) {
-			System.out.println("Today is " + todayFormat + "this food is expired");
+			System.out.println("Today is " + todayFormat + " this food is unexpired");
 		} else {
-			System.out.println("Today is " + todayFormat + "this food is unexpired");
+			System.out.println("Today is " + todayFormat + " this food is expired");
 		}
 	}
 
