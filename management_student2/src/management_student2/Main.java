@@ -18,10 +18,31 @@ public class Main {
 			switch (option) {
 			case 1: {
 				System.out.println("How much student do you want ?");
+				students = new Student[Integer.parseInt(scanner.nextLine())];
+
+				for (int index = 0; index < students.length; index++) {
+					System.out.println("Student " + (index + 1));
+					students[index] = new Student();
+					students[index].inputStudent(scanner);
+				}
 				break;
 			}
 
 			case 2: {
+				// Sort ascending
+				for (int a = 0; a < students.length - 1; a++) {
+					for (int b = a + 1; b < students.length; b++) {
+						if (students[a].getStudentCode() > students[b].getStudentCode()) {
+							Student temp = students[a];
+							students[a] = students[b];
+							students[b] = temp;
+						}
+					}
+				}
+
+				for (Student student : students) {
+					student.outputStudent();
+				}
 				break;
 			}
 			default:
